@@ -14,6 +14,9 @@ protocol ModulesBuilderProtocol {
 
 class ModulesBuilder: ModulesBuilderProtocol {
     static func createMainViewController() -> UIViewController {
-        return MainViewController()
+        let presenter = MainPresenter()
+        let view = MainViewController()
+        view.presenter = presenter
+        return view
     }
 }

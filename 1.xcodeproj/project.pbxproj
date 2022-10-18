@@ -13,6 +13,10 @@
 		DE67E3E928FEA90500723D7C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE67E3E728FEA90500723D7C /* LaunchScreen.storyboard */; };
 		DE67E3F228FEAB3F00723D7C /* ModulesBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE67E3F128FEAB3F00723D7C /* ModulesBuilder.swift */; };
 		DE67E3F628FEAB9500723D7C /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE67E3F528FEAB9500723D7C /* MainViewController.swift */; };
+		DE67E3FF28FEB13300723D7C /* MainPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE67E3FE28FEB13300723D7C /* MainPresenter.swift */; };
+		DE67E42928FEDABA00723D7C /* BannerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE67E42828FEDABA00723D7C /* BannerController.swift */; };
+		DE67E42E28FEEBA400723D7C /* BannerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE67E42C28FEEBA400723D7C /* BannerCell.swift */; };
+		DE67E43128FEEBF400723D7C /* UICollectionViewCell+Identefier.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE67E43028FEEBF400723D7C /* UICollectionViewCell+Identefier.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +28,10 @@
 		DE67E3EA28FEA90500723D7C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DE67E3F128FEAB3F00723D7C /* ModulesBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModulesBuilder.swift; sourceTree = "<group>"; };
 		DE67E3F528FEAB9500723D7C /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		DE67E3FE28FEB13300723D7C /* MainPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPresenter.swift; sourceTree = "<group>"; };
+		DE67E42828FEDABA00723D7C /* BannerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerController.swift; sourceTree = "<group>"; };
+		DE67E42C28FEEBA400723D7C /* BannerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerCell.swift; sourceTree = "<group>"; };
+		DE67E43028FEEBF400723D7C /* UICollectionViewCell+Identefier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewCell+Identefier.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +67,7 @@
 				DE67E3DC28FEA90300723D7C /* AppDelegate.swift */,
 				DE67E3DE28FEA90300723D7C /* SceneDelegate.swift */,
 				DE67E3F128FEAB3F00723D7C /* ModulesBuilder.swift */,
+				DE67E43228FEEC5800723D7C /* Extensions */,
 				DE67E3F028FEAB1500723D7C /* MainModule */,
 				DE67E3E528FEA90500723D7C /* Assets.xcassets */,
 				DE67E3E728FEA90500723D7C /* LaunchScreen.storyboard */,
@@ -70,9 +79,28 @@
 		DE67E3F028FEAB1500723D7C /* MainModule */ = {
 			isa = PBXGroup;
 			children = (
+				DE67E3FE28FEB13300723D7C /* MainPresenter.swift */,
 				DE67E3F528FEAB9500723D7C /* MainViewController.swift */,
+				DE67E3F728FEB09100723D7C /* Banners */,
 			);
 			path = MainModule;
+			sourceTree = "<group>";
+		};
+		DE67E3F728FEB09100723D7C /* Banners */ = {
+			isa = PBXGroup;
+			children = (
+				DE67E42828FEDABA00723D7C /* BannerController.swift */,
+				DE67E42C28FEEBA400723D7C /* BannerCell.swift */,
+			);
+			path = Banners;
+			sourceTree = "<group>";
+		};
+		DE67E43228FEEC5800723D7C /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				DE67E43028FEEBF400723D7C /* UICollectionViewCell+Identefier.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -145,9 +173,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DE67E42E28FEEBA400723D7C /* BannerCell.swift in Sources */,
 				DE67E3DD28FEA90300723D7C /* AppDelegate.swift in Sources */,
 				DE67E3DF28FEA90300723D7C /* SceneDelegate.swift in Sources */,
+				DE67E43128FEEBF400723D7C /* UICollectionViewCell+Identefier.swift in Sources */,
 				DE67E3F228FEAB3F00723D7C /* ModulesBuilder.swift in Sources */,
+				DE67E42928FEDABA00723D7C /* BannerController.swift in Sources */,
+				DE67E3FF28FEB13300723D7C /* MainPresenter.swift in Sources */,
 				DE67E3F628FEAB9500723D7C /* MainViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
