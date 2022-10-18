@@ -22,7 +22,7 @@ class CategoriesController: UICollectionViewController {
         layout.itemSize = CGSize(width: 80, height: 31)
         super.init(collectionViewLayout: layout)
         self.categories = categories
-        collectionView.isScrollEnabled = true
+        collectionView.showsHorizontalScrollIndicator = false
         collectionView.backgroundColor = .clear
         collectionView.register(CategoriesCell.self, forCellWithReuseIdentifier: CategoriesCell.identefier)
     }
