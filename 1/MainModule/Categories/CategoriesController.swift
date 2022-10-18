@@ -22,21 +22,13 @@ class CategoriesController: UICollectionViewController {
         layout.itemSize = CGSize(width: 80, height: 31)
         super.init(collectionViewLayout: layout)
         self.categories = categories
+        collectionView.isScrollEnabled = true
+        collectionView.backgroundColor = .clear
+        collectionView.register(CategoriesCell.self, forCellWithReuseIdentifier: CategoriesCell.identefier)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        configureScrollView()
-    }
-    
-    func configureScrollView() {
-        self.collectionView!.register(CategoriesCell.self, forCellWithReuseIdentifier: CategoriesCell.identefier)
-        view.frame.size = CGSize(width: view.frame.width, height: 40)
-        collectionView.isScrollEnabled = true
     }
 }
 

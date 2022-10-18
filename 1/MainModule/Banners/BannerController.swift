@@ -21,9 +21,9 @@ class BannerController: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(BannerCell.self, forCellWithReuseIdentifier: BannerCell.identefier)
-        collectionView.backgroundColor = .gray
         collectionView.frame.size = CGSize(width: view.frame.width, height: 120)
         collectionView.showsHorizontalScrollIndicator = false
+        collectionView.backgroundColor = .clear
         view = collectionView
         return collectionView
     }()

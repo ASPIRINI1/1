@@ -11,7 +11,7 @@ class MainViewController: UIViewController {
     
     private lazy var bannerController: UIViewController = {
         let banners = BannerController(banners: presenter.banners)
-//        banners.view.translatesAutoresizingMaskIntoConstraints = false
+        banners.view.translatesAutoresizingMaskIntoConstraints = false
         banners.delegate = self
         addChild(banners)
         banners.didMove(toParent: self)
@@ -19,7 +19,7 @@ class MainViewController: UIViewController {
     }()
     private lazy var categoriesController: UIViewController = {
         let categories = CategoriesController(categories: presenter.categories)
-//        categories.view.translatesAutoresizingMaskIntoConstraints = false
+        categories.view.translatesAutoresizingMaskIntoConstraints = false
         categories.delegate = self
         addChild(categories)
         categories.didMove(toParent: self)
@@ -27,7 +27,7 @@ class MainViewController: UIViewController {
     }()
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
-//        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.dataSource = self
         tableView.register(UINib(nibName: TableViewCell.identefier, bundle: nil), forCellReuseIdentifier: TableViewCell.identefier)
         tableView.layer.masksToBounds = true
@@ -38,10 +38,28 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .systemGray5
         presenter.viewLoaded()
-//        view.addSubview(bannerController.view)
-//        view.addSubview(categoriesController.view)
-//        view.addSubview(tableView)
+        view.addSubview(bannerController.view)
+        view.addSubview(categoriesController.view)
+        view.addSubview(tableView)
+        view.setNeedsUpdateConstraints()
+    }
+    
+    override func updateViewConstraints() {
+        super.updateViewConstraints()
+        
+        bannerController.view.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        bannerController.view.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+        bannerController.view.heightAnchor.constraint(equalToConstant: 120).isActive = true
+        
+        categoriesController.view.topAnchor.constraint(equalTo: bannerController.view.bottomAnchor).isActive = true
+        categoriesController.view.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+        categoriesController.view.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        
+        tableView.topAnchor.constraint(equalTo: categoriesController.view.bottomAnchor).isActive = true
+        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        tableView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
     }
 }
 
