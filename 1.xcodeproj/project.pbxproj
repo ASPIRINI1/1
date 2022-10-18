@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		DE67E3DD28FEA90300723D7C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE67E3DC28FEA90300723D7C /* AppDelegate.swift */; };
 		DE67E3DF28FEA90300723D7C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE67E3DE28FEA90300723D7C /* SceneDelegate.swift */; };
+		DE67E3E128FEA90300723D7C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE67E3E028FEA90300723D7C /* ViewController.swift */; };
 		DE67E3E628FEA90500723D7C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE67E3E528FEA90500723D7C /* Assets.xcassets */; };
 		DE67E3E928FEA90500723D7C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE67E3E728FEA90500723D7C /* LaunchScreen.storyboard */; };
 		DE67E3F228FEAB3F00723D7C /* ModulesBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE67E3F128FEAB3F00723D7C /* ModulesBuilder.swift */; };
@@ -23,6 +24,7 @@
 		DE67E3D928FEA90300723D7C /* 1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = 1.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE67E3DC28FEA90300723D7C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DE67E3DE28FEA90300723D7C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		DE67E3E028FEA90300723D7C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		DE67E3E528FEA90500723D7C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DE67E3E828FEA90500723D7C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DE67E3EA28FEA90500723D7C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
