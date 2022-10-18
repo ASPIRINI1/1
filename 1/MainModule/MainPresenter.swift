@@ -15,6 +15,7 @@ protocol MainViewProtocol: AnyObject {
 protocol MainPresenterProtocol: AnyObject {
     var banners: [UIImage] { get }
     var categories: [String] { get }
+    var products: [String] { get }
     func viewLoaded()
     func bannerSelected()
     func categorySelected()
@@ -27,6 +28,7 @@ class MainPresenter: MainPresenterProtocol {
                    UIImage(named: "banner2")!,
                    UIImage(named: "banner3")!]
     var categories = ["1","2","3"]
+    var products = [""]
     
     func viewLoaded() {
         
