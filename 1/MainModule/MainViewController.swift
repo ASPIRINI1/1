@@ -25,14 +25,13 @@ class MainViewController: UIViewController {
         categories.didMove(toParent: self)
         return categories
     }()
-    private lazy var tableView: UITableView = {
-        let tableView = UITableView()
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.dataSource = self
-        tableView.register(UINib(nibName: TableViewCell.identefier, bundle: nil), forCellReuseIdentifier: TableViewCell.identefier)
-        tableView.layer.masksToBounds = true
-        tableView.layer.cornerRadius = 15
-        return tableView
+    private lazy var productsController: ProductsController = {
+        let products = ProductsController()
+        products.view.translatesAutoresizingMaskIntoConstraints = false
+        products.delegate = self
+        addChild(products)
+        products.didMove(toParent: self)
+        return products
     }()
     var presenter: MainPresenterProtocol!
     
@@ -42,7 +41,7 @@ class MainViewController: UIViewController {
         presenter.viewLoaded()
         view.addSubview(bannerController.view)
         view.addSubview(categoriesController.view)
-        view.addSubview(tableView)
+        view.addSubview(productsController.view)
         view.setNeedsUpdateConstraints()
     }
     
@@ -57,9 +56,9 @@ class MainViewController: UIViewController {
         categoriesController.view.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
         categoriesController.view.heightAnchor.constraint(equalToConstant: 60).isActive = true
         
-        tableView.topAnchor.constraint(equalTo: categoriesController.view.bottomAnchor).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        tableView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+        productsController.view.topAnchor.constraint(equalTo: categoriesController.view.bottomAnchor).isActive = true
+        productsController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        productsController.view.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
     }
 }
 
@@ -67,36 +66,11 @@ class MainViewController: UIViewController {
 
 extension MainViewController: MainViewProtocol {
     func scrollTo() {
-        
+        productsController.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
     }
     
-    func reloadData() {
-        tableView.reloadData()
-    }
-}
-
-//  MARK: - UITableViewDataSource
-
-extension MainViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        return presenter.products.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCell.identefier, for: indexPath) as? TableViewCell {
-            cell.fill(product: presenter.products[indexPath.row])
-            return cell
-        }
-        return UITableViewCell()
-    }
-}
-
-//  MARK: - TableViewCellDelegate
-
-extension MainViewController: TableViewCellDelegate {
-    func tableViewCell(_ cell: UITableViewCell, didSelectProductForID productID: String) {
-        presenter.productSelected()
+    func reloadProducts() {
+        productsController.reloadData(products: presenter.products)
     }
 }
 
@@ -113,5 +87,15 @@ extension MainViewController: BannerControllerDelegate {
 extension MainViewController: CategoriesControllerDelegate {
     func categoriesController(_ viewController: CategoriesController, didSelectItemAt index: Int) {
         presenter.categorySelected(index: index)
+    }
+}
+
+extension MainViewController: ProductsControllerDelegate {
+    func productsController(_ tableViewController: UITableViewController, didSelectProducAt index: Int) {
+        presenter.productSelected(index: index)
+    }
+    
+    func productsController(_ tableViewController: UITableViewController, didTapProductBuyButtonAt index: Int) {
+        presenter.productBuyButtonTapped(index: index)
     }
 }

@@ -10,7 +10,7 @@ import UIKit
 
 protocol MainViewProtocol: AnyObject {
     func scrollTo()
-    func reloadData()
+    func reloadProducts()
 }
 
 protocol MainPresenterProtocol: AnyObject {
@@ -20,7 +20,8 @@ protocol MainPresenterProtocol: AnyObject {
     func viewLoaded()
     func bannerSelected(index: Int)
     func categorySelected(index: Int)
-    func productSelected()
+    func productSelected(index: Int)
+    func productBuyButtonTapped(index: Int)
 }
 
 class MainPresenter: MainPresenterProtocol {
@@ -42,7 +43,7 @@ class MainPresenter: MainPresenterProtocol {
         networkService.getProucts { [weak self] products in
             guard let products = products else { return }
             self?.products = products
-            self?.view.reloadData()
+            self?.view.reloadProducts()
         }
     }
     
@@ -54,7 +55,11 @@ class MainPresenter: MainPresenterProtocol {
             
     }
     
-    func productSelected() {
+    func productSelected(index: Int) {
+        
+    }
+    
+    func productBuyButtonTapped(index: Int) {
         
     }
 }
