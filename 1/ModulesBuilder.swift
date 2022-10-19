@@ -14,8 +14,9 @@ protocol ModulesBuilderProtocol {
 
 class ModulesBuilder: ModulesBuilderProtocol {
     static func createMainViewController() -> UIViewController {
-        let presenter = MainPresenter()
         let view = MainViewController()
+        let networkManager = FireAPI.shared
+        let presenter = MainPresenter(view: view, networkService: networkManager)
         view.presenter = presenter
         return view
     }

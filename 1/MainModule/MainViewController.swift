@@ -69,17 +69,23 @@ extension MainViewController: MainViewProtocol {
     func scrollTo() {
         
     }
+    
+    func reloadData() {
+        tableView.reloadData()
+    }
 }
 
 //  MARK: - UITableViewDataSource
 
 extension MainViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
         return presenter.products.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCell.identefier, for: indexPath) as? TableViewCell {
+            cell.fill(product: presenter.products[indexPath.row])
             return cell
         }
         return UITableViewCell()

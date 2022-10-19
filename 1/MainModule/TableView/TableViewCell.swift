@@ -24,4 +24,12 @@ class TableViewCell: UITableViewCell {
     @IBAction func byButtonAction(_ sender: Any) {
         delegate?.tableViewCell(self, didSelectProductForID: productID)
     }
+    
+    func fill(product: Product) {
+        productID = product.id
+        imageView?.image = product.image
+        titleLabel.text = product.title
+        descriptionLabel.text = product.description
+        byButton.setTitle("от \(product.price) р", for: .normal)
+    }
 }
