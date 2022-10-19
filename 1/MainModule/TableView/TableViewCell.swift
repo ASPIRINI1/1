@@ -7,21 +7,21 @@
 
 import UIKit
 
-protocol ProductsCellDelegate: AnyObject {
-    func productsCellDidTapBuyButton(_ cell: UITableViewCell)
+protocol TableViewCellDelegate: AnyObject {
+    func tableViewCellDidTapBuyButton(_ cell: UITableViewCell)
 }
 
-class ProductsCell: UITableViewCell {
+class TableViewCell: UITableViewCell {
     
     @IBOutlet weak var imgView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var buyButton: UIButton!
     
-    weak var delegate: ProductsCellDelegate?
+    weak var delegate: TableViewCellDelegate?
     
     @IBAction func byButtonAction(_ sender: Any) {
-        delegate?.productsCellDidTapBuyButton(self)
+        delegate?.tableViewCellDidTapBuyButton(self)
     }
     
     func fill(product: Product) {

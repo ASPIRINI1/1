@@ -25,23 +25,25 @@ class MainViewController: UIViewController {
         categories.didMove(toParent: self)
         return categories
     }()
-    private lazy var productsController: ProductsController = {
-        let products = ProductsController()
-        products.view.translatesAutoresizingMaskIntoConstraints = false
-        products.delegate = self
-        addChild(products)
-        products.didMove(toParent: self)
-        return products
+    private lazy var tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.layer.masksToBounds = true
+        tableView.layer.cornerRadius = 15
+        tableView.register(UINib(nibName: TableViewCell.identefier, bundle: nil), forCellReuseIdentifier: TableViewCell.identefier)
+        return tableView
     }()
     var presenter: MainPresenterProtocol!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemGray5
         presenter.viewLoaded()
         view.addSubview(bannerController.view)
         view.addSubview(categoriesController.view)
-        view.addSubview(productsController.view)
+        view.addSubview(tableView)
+        view.backgroundColor = .systemGray5
         view.setNeedsUpdateConstraints()
     }
     
@@ -56,9 +58,9 @@ class MainViewController: UIViewController {
         categoriesController.view.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
         categoriesController.view.heightAnchor.constraint(equalToConstant: 60).isActive = true
         
-        productsController.view.topAnchor.constraint(equalTo: categoriesController.view.bottomAnchor).isActive = true
-        productsController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        productsController.view.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+        tableView.topAnchor.constraint(equalTo: categoriesController.view.bottomAnchor).isActive = true
+        tableView.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
+        tableView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
     }
 }
 
@@ -66,11 +68,45 @@ class MainViewController: UIViewController {
 
 extension MainViewController: MainViewProtocol {
     func scrollTo() {
-        productsController.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+        tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
     }
     
     func reloadProducts() {
-        productsController.reloadData(products: presenter.products)
+        tableView.reloadData()
+    }
+}
+
+//  MARK: - UITableViewDataSource
+
+extension MainViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return presenter.products.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCell.identefier, for: indexPath) as? TableViewCell {
+            cell.delegate = self
+            cell.fill(product: presenter.products[indexPath.row])
+            return cell
+        }
+        return UITableViewCell()
+    }
+}
+
+//  MARK: - UITableViewDelegate
+
+extension MainViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        presenter.productSelected(index: indexPath.row)
+    }
+}
+
+//  MARK: - TableViewCellDelegate
+
+extension MainViewController: TableViewCellDelegate {
+    func tableViewCellDidTapBuyButton(_ cell: UITableViewCell) {
+        guard let index = tableView.indexPath(for: cell)?.row else { return }
+        presenter.productBuyButtonTapped(index: index)
     }
 }
 
@@ -90,12 +126,19 @@ extension MainViewController: CategoriesControllerDelegate {
     }
 }
 
-extension MainViewController: ProductsControllerDelegate {
-    func productsController(_ tableViewController: UITableViewController, didSelectProducAt index: Int) {
-        presenter.productSelected(index: index)
-    }
-    
-    func productsController(_ tableViewController: UITableViewController, didTapProductBuyButtonAt index: Int) {
-        presenter.productBuyButtonTapped(index: index)
+//  MARK: - UIScrollViewDelegate
+
+extension MainViewController {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let y = tableView.contentOffset.y        
+        if y > 0 && categoriesController.view.frame.minY > view.safeAreaLayoutGuide.layoutFrame.minY {
+            categoriesController.view.frame.origin.y -= y
+            tableView.frame.origin.y -= y
+        }
+
+        if y < 0 && categoriesController.view.frame.minY < bannerController.view.frame.maxY {
+            categoriesController.view.frame.origin.y += -y
+            tableView.frame.origin.y += -y
+        }
     }
 }
