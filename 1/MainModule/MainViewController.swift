@@ -50,16 +50,19 @@ class MainViewController: UIViewController {
     override func updateViewConstraints() {
         super.updateViewConstraints()
         
+        let bannersHeight = 120.0
+        let categoriesHeight = 60.0
+        
         bannerController.view.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         bannerController.view.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
-        bannerController.view.heightAnchor.constraint(equalToConstant: 120).isActive = true
+        bannerController.view.heightAnchor.constraint(equalToConstant: bannersHeight).isActive = true
         
         categoriesController.view.topAnchor.constraint(equalTo: bannerController.view.bottomAnchor).isActive = true
         categoriesController.view.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
-        categoriesController.view.heightAnchor.constraint(equalToConstant: 60).isActive = true
-        
+        categoriesController.view.heightAnchor.constraint(equalToConstant: categoriesHeight).isActive = true
+
         tableView.topAnchor.constraint(equalTo: categoriesController.view.bottomAnchor).isActive = true
-        tableView.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
+        tableView.heightAnchor.constraint(equalTo: view.heightAnchor, constant: -(categoriesHeight + view.safeAreaLayoutGuide.layoutFrame.minY)).isActive = true
         tableView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
     }
 }
@@ -130,15 +133,24 @@ extension MainViewController: CategoriesControllerDelegate {
 
 extension MainViewController {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let y = tableView.contentOffset.y        
+        let y = tableView.contentOffset.y
         if y > 0 && categoriesController.view.frame.minY > view.safeAreaLayoutGuide.layoutFrame.minY {
             categoriesController.view.frame.origin.y -= y
             tableView.frame.origin.y -= y
         }
-
         if y < 0 && categoriesController.view.frame.minY < bannerController.view.frame.maxY {
             categoriesController.view.frame.origin.y += -y
             tableView.frame.origin.y += -y
+        }
+        if categoriesController.view.frame.minY < view.safeAreaLayoutGuide.layoutFrame.minY {
+            categoriesController.view.frame.origin.y = view.safeAreaLayoutGuide.layoutFrame.minY
+            tableView.frame.origin.y = categoriesController.view.frame.maxY
+            bannerController.view.layer.opacity = 0
+        }
+        if categoriesController.view.frame.minY > bannerController.view.frame.maxY {
+            categoriesController.view.frame.origin.y = bannerController.view.frame.maxY
+            tableView.frame.origin.y = categoriesController.view.frame.maxY
+            bannerController.view.layer.opacity = 1
         }
     }
 }

@@ -19,7 +19,7 @@ class CategoriesController: UICollectionViewController {
     init(categories: [String]) {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.itemSize = CGSize(width: 80, height: 31)
+        layout.itemSize = CGSize(width: 110, height: 31)
         self.categories = categories
         super.init(collectionViewLayout: layout)
         collectionView.showsHorizontalScrollIndicator = false
