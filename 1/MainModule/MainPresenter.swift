@@ -44,6 +44,12 @@ class MainPresenter: MainPresenterProtocol {
             guard let products = products else { return }
             self?.products = products
             self?.view.reloadProducts()
+            for product in products {
+                self?.networkService.getImage(forID: product.id) { [weak self] image in
+                    product.image = image
+                    self?.view.reloadProducts()
+                }
+            }
         }
     }
     

@@ -31,7 +31,6 @@ class FireAPI: FireAPIProtocol {
         case title = "title"
         case description = "description"
         case price = "price"
-        case imagePath = "imagePath"
     }
     
     private init() {}
@@ -46,15 +45,12 @@ class FireAPI: FireAPIProtocol {
             guard let documents = querySnapshot?.documents else { completion(nil); return }
             var products: [Product] = []
             for document in documents {
-                self.getImage(forID: document.documentID) { image in
-                    products.append(Product(id: document.documentID,
-                                            title: document.get(DocumentFields.title.rawValue) as? String ?? "",
-                                            description: document.get(DocumentFields.description.rawValue) as? String ?? "",
-                                            price: document.get(DocumentFields.price.rawValue) as? Int ?? 0,
-                                            image: image ?? UIImage()))
-                    if products.count == documents.count {
-                        completion(products)
-                    }
+                products.append(Product(id: document.documentID,
+                                        title: document.get(DocumentFields.title.rawValue) as? String ?? "",
+                                        description: document.get(DocumentFields.description.rawValue) as? String ?? "",
+                                        price: document.get(DocumentFields.price.rawValue) as? Int ?? 0))
+                if products.count == documents.count {
+                    completion(products)
                 }
             }
         }
