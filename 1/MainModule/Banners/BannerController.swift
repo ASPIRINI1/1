@@ -8,37 +8,29 @@
 import UIKit
 
 protocol BannerControllerDelegate: AnyObject {
-    func bannerController(_ collectionView: UICollectionView, didSelectItemAtIndex: Int)
+    func bannerController(_ collectionController: UICollectionView, didSelectItemAt index: Int)
 }
 
 class BannerController: UICollectionViewController {
     
-    var banners: [UIImage]!
+    var banners: [UIImage]
     weak var delegate: BannerControllerDelegate?
     
     init(banners: [UIImage]) {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.itemSize = CGSize(width: 300, height: 120)
-        super.init(collectionViewLayout: layout)
         self.banners = banners
+        super.init(collectionViewLayout: layout)
         view = collectionView
-        collectionView.register(BannerCell.self, forCellWithReuseIdentifier: BannerCell.identefier)
         collectionView.frame.size = CGSize(width: view.frame.width, height: 120)
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.backgroundColor = .clear
+        collectionView.register(BannerCell.self, forCellWithReuseIdentifier: BannerCell.identefier)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-}
-
-// MARK: - UICollectionViewDelegate
-
-extension BannerController {
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        delegate?.bannerController(collectionView, didSelectItemAtIndex: indexPath.row)
     }
 }
 
@@ -55,5 +47,13 @@ extension BannerController {
             return cell
         }
         return UICollectionViewCell()
+    }
+}
+
+// MARK: - UICollectionViewDelegate
+
+extension BannerController {
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        delegate?.bannerController(collectionView, didSelectItemAt: indexPath.row)
     }
 }

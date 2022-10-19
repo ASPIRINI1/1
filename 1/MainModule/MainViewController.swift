@@ -103,8 +103,8 @@ extension MainViewController: TableViewCellDelegate {
 //  MARK: - BannerControllerDelegate
 
 extension MainViewController: BannerControllerDelegate {
-    func bannerController(_ collectionView: UICollectionView, didSelectItemAtIndex: Int) {
-        presenter.bannerSelected()
+    func bannerController(_ collectionView: UICollectionView, didSelectItemAt index: Int) {
+        presenter.bannerSelected(index: index)
     }
 }
 
