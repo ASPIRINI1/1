@@ -8,20 +8,20 @@
 import UIKit
 
 protocol CategoriesControllerDelegate: AnyObject {
-    func categoriesController(_ viewController: CategoriesController, didSelectItemAtIndex: Int)
+    func categoriesController(_ collectionController: CategoriesController, didSelectItemAt index: Int)
 }
 
 class CategoriesController: UICollectionViewController {
     
-    var categories: [String]!
+    var categories: [String]
     weak var delegate: CategoriesControllerDelegate?
     
     init(categories: [String]) {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.itemSize = CGSize(width: 80, height: 31)
-        super.init(collectionViewLayout: layout)
         self.categories = categories
+        super.init(collectionViewLayout: layout)
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.backgroundColor = .clear
         collectionView.register(CategoriesCell.self, forCellWithReuseIdentifier: CategoriesCell.identefier)
@@ -52,6 +52,6 @@ extension CategoriesController {
 
 extension CategoriesController {
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        delegate?.categoriesController(self, didSelectItemAtIndex: indexPath.row)
+        delegate?.categoriesController(self, didSelectItemAt: indexPath.row)
     }
 }

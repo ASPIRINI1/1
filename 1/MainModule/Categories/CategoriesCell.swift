@@ -9,19 +9,20 @@ import UIKit
 
 class CategoriesCell: UICollectionViewCell {
     
-    private lazy var button: UIButton = {
-        let button = UIButton(type: .system)
-        button.frame = self.bounds
-        button.layer.masksToBounds = true
-        button.layer.cornerRadius = 15
-        button.layer.borderWidth = 1
-        button.layer.borderColor = UIColor.systemRed.cgColor
-        button.setTitleColor(.systemRed, for: .normal)
-        addSubview(button)
-        return button
+    private lazy var label: UILabel = {
+        let label = UILabel(frame: self.bounds)
+        label.layer.masksToBounds = true
+        label.layer.cornerRadius = 15
+        label.layer.borderWidth = 1
+        label.layer.borderColor = UIColor.systemRed.cgColor
+        label.textColor = .systemRed
+        label.textAlignment = .center
+        label.font = .systemFont(ofSize: 12)
+        addSubview(label)
+        return label
     }()
     
     func fill(title: String) {
-        button.setTitle(title, for: .normal)
+        label.text = title
     }
 }

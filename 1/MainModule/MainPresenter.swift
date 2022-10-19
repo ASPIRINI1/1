@@ -19,7 +19,7 @@ protocol MainPresenterProtocol: AnyObject {
     var products: [Product] { get }
     func viewLoaded()
     func bannerSelected(index: Int)
-    func categorySelected()
+    func categorySelected(index: Int)
     func productSelected()
 }
 
@@ -50,8 +50,8 @@ class MainPresenter: MainPresenterProtocol {
         
     }
     
-    func categorySelected() {
-        
+    func categorySelected(index: Int) {
+            
     }
     
     func productSelected() {

@@ -111,7 +111,7 @@ extension MainViewController: BannerControllerDelegate {
 //  MARK: - CategoriesControllerDelegate
 
 extension MainViewController: CategoriesControllerDelegate {
-    func categoriesController(_ viewController: CategoriesController, didSelectItemAtIndex: Int) {
-        presenter.categorySelected()
+    func categoriesController(_ viewController: CategoriesController, didSelectItemAt index: Int) {
+        presenter.categorySelected(index: index)
     }
 }
