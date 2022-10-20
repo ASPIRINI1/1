@@ -36,10 +36,6 @@ class CategoriesController: UICollectionViewController {
         self.categories = categories
         collectionView.reloadData()
     }
-    
-    func set(indexParh: IndexPath) {
-        
-    }
 }
 
 // MARK: - UICollectionViewDataSource
