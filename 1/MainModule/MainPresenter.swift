@@ -27,7 +27,7 @@ protocol MainPresenterProtocol: AnyObject {
 
 class MainPresenter: MainPresenterProtocol {
     
-    var view: MainViewProtocol
+    weak var view: MainViewProtocol?
     var networkService: FireAPIProtocol
     var banners = [UIImage(named: "banner1")!,
                    UIImage(named: "banner2")!,
@@ -43,15 +43,15 @@ class MainPresenter: MainPresenterProtocol {
     func viewLoaded() {
         networkService.getProucts { [weak self] products in
             self?.products = products ?? []
-            self?.view.reloadProducts()
+            self?.view?.reloadProducts()
             guard let products = products else { return }
             for category in products {
                 self?.categories.append(category.category)
-                self?.view.reloadCategories()
+                self?.view?.reloadCategories()
                 for product in category.products {
                     self?.networkService.getImage(in: category.category, for: product.id, completion: { [weak self] image in
                         product.image = image
-                        self?.view.reloadProducts()
+                        self?.view?.reloadProducts()
                     })
                 }
             }
@@ -63,7 +63,7 @@ class MainPresenter: MainPresenterProtocol {
     }
     
     func categorySelected(index: Int) {
-        view.scrollTo(section: index)
+        view?.scrollTo(section: index)
     }
     
     func productSelected(index: Int) {
