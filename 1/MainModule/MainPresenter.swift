@@ -9,14 +9,14 @@ import Foundation
 import UIKit
 
 protocol MainViewProtocol: AnyObject {
-    func scrollTo()
+    func scrollTo(section: Int)
     func reloadProducts()
 }
 
 protocol MainPresenterProtocol: AnyObject {
     var banners: [UIImage] { get }
     var categories: [String] { get }
-    var products: [Product] { get }
+    var products: [(category: String, products: [Product])] { get }
     func viewLoaded()
     func bannerSelected(index: Int)
     func categorySelected(index: Int)
@@ -31,8 +31,8 @@ class MainPresenter: MainPresenterProtocol {
     var banners = [UIImage(named: "banner1")!,
                    UIImage(named: "banner2")!,
                    UIImage(named: "banner3")!]
-    var categories = ["Пицца","Комбо","Десерты", "Напитки"]
-    var products: [Product] = []
+    var categories:[String] = []
+    var products: [(category: String, products: [Product])] = []
     
     init(view: MainViewProtocol, networkService: FireAPIProtocol) {
         self.view = view
@@ -41,13 +41,17 @@ class MainPresenter: MainPresenterProtocol {
     
     func viewLoaded() {
         networkService.getProucts { [weak self] products in
-            guard let products = products else { return }
-            self?.products = products
+            self?.products = products ?? []
             self?.view.reloadProducts()
-            for product in products {
-                self?.networkService.getImage(forID: product.id) { [weak self] image in
-                    product.image = image
-                    self?.view.reloadProducts()
+            guard let products = products else { return }
+            for category in products {
+                self?.categories.append(category.category)
+                self?.view.reloadProducts()
+                for product in category.products {
+                    self?.networkService.getImage(in: category.category, for: product.id, completion: { [weak self] image in
+                        product.image = image
+                        self?.view.reloadProducts()
+                    })
                 }
             }
         }
@@ -58,7 +62,7 @@ class MainPresenter: MainPresenterProtocol {
     }
     
     func categorySelected(index: Int) {
-            
+        view.scrollTo(section: index)
     }
     
     func productSelected(index: Int) {

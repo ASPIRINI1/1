@@ -10,8 +10,9 @@ import UIKit
 import Firebase
 
 protocol FireAPIProtocol {
-    func getProucts(completion: @escaping ([Product]?) -> ())
-    func getImage(forID id: String, completion: @escaping (UIImage?) -> ())
+    func getProucts(completion: @escaping ([(category: String, products: [Product])]?) -> ())
+    func getProducts(fromCollection collection: String, completion: @escaping ([Product]?) -> ())
+    func getImage(in collection: String, for id: String, completion: @escaping (UIImage?) -> ())
 }
 
 class FireAPI: FireAPIProtocol {
@@ -23,8 +24,11 @@ class FireAPI: FireAPIProtocol {
          return Firestore.firestore()
      }()
     
-    enum Collections: String {
-        case products = "Products"
+    enum Collections: String, CaseIterable {
+        case products = "Pizza"
+        case drinks = "Drinks"
+        case desserts = "Desserts"
+        case sets = "Sets"
     }
     
     enum DocumentFields: String {
@@ -35,8 +39,21 @@ class FireAPI: FireAPIProtocol {
     
     private init() {}
     
-    func getProucts(completion: @escaping ([Product]?) -> ()) {
-        db.collection(Collections.products.rawValue).getDocuments { querySnapshot, error in
+    func getProucts(completion: @escaping ([(category: String, products: [Product])]?) -> ()) {
+        var allProducts: [(category: String, products: [Product])] = []
+        for collection in Collections.allCases {
+            getProducts(fromCollection: collection.rawValue) { products in
+                guard let products = products else { return }
+                allProducts.append((category: collection.rawValue, products: products))
+                if allProducts.count == Collections.allCases.count {
+                    completion(allProducts)
+                }
+            }
+        }
+    }
+    
+    func getProducts(fromCollection collection: String, completion: @escaping ([Product]?) -> ()) {
+        db.collection(collection).getDocuments { querySnapshot, error in
             if let error = error {
                 print(error)
                 completion(nil)
@@ -56,8 +73,8 @@ class FireAPI: FireAPIProtocol {
         }
     }
     
-    func getImage(forID id: String, completion: @escaping (UIImage?) -> ()) {
-        let reference = Storage.storage().reference().child(Collections.products.rawValue).child(id)
+    func getImage(in collection: String, for id: String, completion: @escaping (UIImage?) -> ()) {
+        let reference = Storage.storage().reference().child(collection).child(id)
         reference.listAll { result, error in
             if let error = error {
                 print(error)

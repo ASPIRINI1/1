@@ -9,7 +9,7 @@ import UIKit
 
 class MainViewController: UIViewController {
     
-    private lazy var bannerController: UIViewController = {
+    private lazy var bannerController: BannerController = {
         let banners = BannerController(banners: presenter.banners)
         banners.view.translatesAutoresizingMaskIntoConstraints = false
         banners.delegate = self
@@ -17,7 +17,7 @@ class MainViewController: UIViewController {
         banners.didMove(toParent: self)
         return banners
     }()
-    private lazy var categoriesController: UIViewController = {
+    private lazy var categoriesController: CategoriesController = {
         let categories = CategoriesController(categories: presenter.categories)
         categories.view.translatesAutoresizingMaskIntoConstraints = false
         categories.delegate = self
@@ -70,26 +70,35 @@ class MainViewController: UIViewController {
 //  MARK: - MainViewProtocol
 
 extension MainViewController: MainViewProtocol {
-    func scrollTo() {
-        tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+    func scrollTo(section: Int) {
+        tableView.scrollToRow(at: IndexPath(row: 0, section: section), at: .top, animated: true)
     }
     
     func reloadProducts() {
         tableView.reloadData()
+        categoriesController.update(categories: presenter.categories)
     }
 }
 
 //  MARK: - UITableViewDataSource
 
 extension MainViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return presenter.products[section].category
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
         return presenter.products.count
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return presenter.products[section].products.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCell.identefier, for: indexPath) as? TableViewCell {
             cell.delegate = self
-            cell.fill(product: presenter.products[indexPath.row])
+            cell.fill(product: presenter.products[indexPath.section].products[indexPath.row])
             return cell
         }
         return UITableViewCell()

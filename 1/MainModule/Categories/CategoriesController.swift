@@ -30,6 +30,11 @@ class CategoriesController: UICollectionViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    func update(categories: [String]) {
+        self.categories = categories
+        collectionView.reloadData()
+    }
 }
 
 // MARK: - UICollectionViewDataSource
