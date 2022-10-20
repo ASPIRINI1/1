@@ -28,6 +28,6 @@ class TableViewCell: UITableViewCell {
         imgView.image = product.image
         titleLabel.text = product.title
         descriptionLabel.text = product.description
-        buyButton.titleLabel?.text = "от \(product.price) р"
+        buyButton.titleLabel?.text = "from \(product.price) r"
     }
 }
