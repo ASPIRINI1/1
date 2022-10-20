@@ -76,6 +76,9 @@ extension MainViewController: MainViewProtocol {
     
     func reloadProducts() {
         tableView.reloadData()
+    }
+    
+    func reloadCategories() {
         categoriesController.update(categories: presenter.categories)
     }
 }

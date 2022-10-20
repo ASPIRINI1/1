@@ -20,6 +20,7 @@ class CategoriesController: UICollectionViewController {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.itemSize = CGSize(width: 110, height: 31)
+        layout.sectionInset.left = 20
         self.categories = categories
         super.init(collectionViewLayout: layout)
         collectionView.showsHorizontalScrollIndicator = false
@@ -34,6 +35,10 @@ class CategoriesController: UICollectionViewController {
     func update(categories: [String]) {
         self.categories = categories
         collectionView.reloadData()
+    }
+    
+    func set(indexParh: IndexPath) {
+        
     }
 }
 
@@ -58,5 +63,12 @@ extension CategoriesController {
 extension CategoriesController {
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         delegate?.categoriesController(self, didSelectItemAt: indexPath.row)
+        var cell: CategoriesCell?
+        for index in 0...categories.count {
+            cell = collectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? CategoriesCell
+            cell?.set(selected: false)
+        }
+        cell = collectionView.cellForItem(at: indexPath) as? CategoriesCell
+        cell?.set(selected: true)
     }
 }

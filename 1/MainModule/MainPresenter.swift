@@ -11,6 +11,7 @@ import UIKit
 protocol MainViewProtocol: AnyObject {
     func scrollTo(section: Int)
     func reloadProducts()
+    func reloadCategories()
 }
 
 protocol MainPresenterProtocol: AnyObject {
@@ -46,7 +47,7 @@ class MainPresenter: MainPresenterProtocol {
             guard let products = products else { return }
             for category in products {
                 self?.categories.append(category.category)
-                self?.view.reloadProducts()
+                self?.view.reloadCategories()
                 for product in category.products {
                     self?.networkService.getImage(in: category.category, for: product.id, completion: { [weak self] image in
                         product.image = image

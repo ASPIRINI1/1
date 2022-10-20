@@ -25,4 +25,12 @@ class CategoriesCell: UICollectionViewCell {
     func fill(title: String) {
         label.text = title
     }
+    
+    func set(selected: Bool) {
+        if selected {
+            label.backgroundColor = .systemRed.withAlphaComponent(0.3)
+        } else {
+            label.backgroundColor = .clear
+        }
+    }
 }

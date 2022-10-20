@@ -20,6 +20,7 @@ class BannerController: UICollectionViewController {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.itemSize = CGSize(width: 300, height: 120)
+        layout.sectionInset.left = 20
         self.banners = banners
         super.init(collectionViewLayout: layout)
         view = collectionView
